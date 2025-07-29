@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Lady Of Sorrows Church - Ja-Ela</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+  <!-- Header Section -->
+  <header class="header">
+    <div class="header-container">
+      <!-- Left: Logo -->
+      <div class="logo">
+        <img src="images/logo1.jpg" alt="Church Logo" />
+      </div>
+
+      <!-- Center: Navigation -->
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="#" class="active">Home</a></li>
+          <li><a href="videos.html">Videos</a></li>
+          <li><a href="notices.html">Notices</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Right: User + Music Switch -->
+      <div class="header-right">
+        <!-- User Icon -->
+        <div class="user-icon" id="userIcon">
+          <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 35px; color: white;" title="User"></i>
+          <div class="user-details" id="userDetails">
+            <p><strong>John Doe</strong></p>
+            <p>johndoe@example.com</p>
+          </div>
+        </div>
+        
+        <!-- Music Toggle -->
+       <!-- Music Toggle -->
+<div class="header-right music-toggle-wrapper">
+  <i class="fa fa-volume-off" aria-hidden="true" style="color: white; font-size: 18px;" title="off"></i>
+
+  <label class="switch" >
+    <input type="checkbox" id="musicToggle" style="cursor: pointer;"/>
+    <span class="slider round"></span>
+  </label>
+  <i class="fa fa-volume-up" aria-hidden="true" style="color: white; font-size: 18px;" title="on"></i>
+</div>
+
+
+<!-- Audio -->
+<audio id="backgroundMusic" src="audio/කුරුසිය ළඟ වැළපුන මවෙනී _ Kurusiya Langa Walapuna Maweni By St. Cecilia_s Choir, Ja-Ela.m4a" loop autoplay></audio>
+      </div>
+    </div>
+  </header>
+  <!-- Hero Section -->
+<section class="hero">
+  <div class="slider-container" id="imageSlider">
+    <div class="slide fade">
+      <img src="images/jaela church.jpg" alt="Image 1" />
+    </div>
+    <div class="slide fade">
+      <img src="images/churchalter.jpg" alt="Image 2" />
+    </div>
+    <div class="slide fade">
+      <img src="images/church2.jpeg" alt="Image 3" />
+    </div>
+  </div>
+
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <div class="hero-center">
+        <h1 id="church-title">Our Lady Of Sorrows<br/>Church Ja-Ela</h1>
+      </div>
+      <div class="hero-right">
+        <img src="images/statue1.png" alt="Priest" class="priest-img" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="about-video">
+    <video src="video/Church video.mp4" autoplay muted loop></video>
+  </div>
+  <div class="about-content">
+    <h2>About Our Church</h2>
+    <p>
+      Our Lady Of Sorrows Church in Ja-Ela is a place of spiritual reflection and community gathering. 
+      We welcome all who seek peace, prayer, and fellowship. Join us for regular services and events.
+    </p>
+    <button class="see-more-btn"><a href="about.html">See More</a></button>
+  </div>
+</section>
+
+<!-- our Priest-->
+<section class="priest-section">
+  <div class="priest-left">
+    <h2>Our Priest</h2>
+    <h3 class="priest-name">Rev. Fr. Chaminda Roshan</h3> <!-- Added priest name here -->
+    <p>
+      Our Current priest Rev.Fr.Chaminda Roshan is devoted to serving the community with compassion and faith. 
+      He has been leading our parish for over 1.5 years, inspiring many with his sermons and kindness. He leads everyone to God.
+    </p>
+    <p>
+      <strong>Birthday: </strong>
+    </p>
+    <div class="small-images">
+      <img src="images/jaela church.jpg" alt="Priest 1" class="small-img active" data-large="images/jaela church.jpg" />
+      <img src="images/church2.jpeg" alt="Priest 2" class="small-img" data-large="images/church2.jpeg" />
+      <img src="images/logo1.jpg" alt="Priest 3" class="small-img" data-large="images/logo1.jpg" />
+    </div>
+  </div>
+  <div class="priest-right">
+    <img src="images/jaela church.jpg" alt="Priest Large" class="priest-large-img" />
+  </div>
+</section>
+<!--Special Moments -->
+<section class="special-moments-section">
+  <h2>Special Moments</h2>
+
+  <div class="moments-gallery">
+    <div class="main-image">
+      <img id="mainMomentImage" src="images/father2.jpg" alt="Special Moment" />
+    </div>
+
+    <div class="thumbnails">
+      <img src="images/father2.jpg" alt="Moment 1" class="thumb active" data-index="0" />
+      <img src="images/father3.jpg" alt="Moment 2" class="thumb" data-index="1" />
+      <img src="images/feast.jpg" alt="Moment 3" class="thumb" data-index="2" />
+      <img src="images/jaela church.jpg" alt="Moment 4" class="thumb" data-index="3" />
+    </div>
+
+    <p class="moment-description">
+      Cherished memories and beautiful gatherings from our Church community captured in time.
+    </p>
+  </div>
+</section>
+
+<!---Contact us section-->
+  <!-- Contact Us Section -->
+  <section class="contact-section">
+    <h2>Contact Us</h2>
+    <div class="contact-card">
+      <div class="contact-container">
+        
+        <!-- LEFT SIDE: CONTACT INFO -->
+        <div class="contact-details">
+          <p><strong>Rev. Fr. Chaminda Roshan</strong><br>
+            Parish Priest<br>
+            Email: <a href="mailto:chamindaroshan@gmail.com">chamindaroshan@gmail.com</a><br>
+            Phone: <a href="tel:+94711234567">+94 71 123 4567</a>
+          </p>
+
+          <p><strong>Mr. Rohan D Silva</strong><br>
+            Church Secretary<br>
+            Email: <a href="mailto:rohandsilva@gmail.com">rohandsilva@gmail.com</a><br>
+            Phone: <a href="tel:+94711234567">+94 71 123 4567</a>
+          </p>
+
+          <p><strong>Mrs. Chamila Fernando</strong><br>
+            Church Vice Secretary<br>
+            Email: <a href="mailto:chamilafernando@gmail.com">chamilafernando@gmail.com</a><br>
+            Phone: <a href="tel:+94779876543">+94 77 987 6543</a>
+          </p>
+
+          <p><strong>Mr. Samantha Perera</strong><br>
+            Principal of the Sunday School<br>
+            Email: <a href="mailto:samanthaperera@gmail.com">samanthaperera@gmail.com</a><br>
+            Phone: <a href="tel:+94762345678">+94 76 234 5678</a>
+          </p>
+        </div>
+
+        <!-- RIGHT SIDE: GOOGLE MAP -->
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126732.57611556357!2d79.8420727286611!3d7.071261470284931!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae2fda948d09713%3A0xab409dcd134e163d!2sOur%20Lady%20of%20Sorrows%20Church%2C%20Ja-Ela!5e0!3m2!1sen!2slk!4v1721126401234!5m2!1sen!2slk" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+<!-- Footer Section -->
+<footer class="footer">
+  <div class="footer-container">
+    <p>&copy; 2025 Our Lady Of Sorrows Church - Ja-Ela. All rights reserved.</p>
+    <div class="footer-icons">
+      <a href="#"><i class="fa fa-facebook"></i></a>
+      <a href="#"><i class="fa fa-youtube"></i></a>
+      <a href="#"><i class="fa fa-envelope"></i></a>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="JS/musicscript.js"></script>
+  <script src="JS/script.js"></script>
+</body>
+</html>
