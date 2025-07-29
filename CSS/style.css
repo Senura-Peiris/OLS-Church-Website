@@ -572,6 +572,28 @@ input:checked + .slider:before {
   color: #555;
 }
 
+.see-videos-btn-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.see-videos-btn {
+  background-color: #004080;
+  color: white;
+  padding: 10px 25px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+.see-videos-btn:hover {
+  background-color: #0066cc;
+  transform: translateY(-2px);
+}
+
 /*--Contact us section styles---*/
 .contact-section {
   background-color: #f9f9f9;
