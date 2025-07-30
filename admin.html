@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Video Management</title>
+  <link rel="stylesheet" href="CSS/style.css"/>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-container input {
+      padding: 8px;
+      margin: 5px;
+      width: 250px;
+    }
+
+    .form-container button {
+      padding: 10px 20px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .video-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    .video-table th, .video-table td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .video-table th {
+      background-color: #f4f4f4;
+    }
+
+    .action-btn {
+      margin-right: 10px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .edit-btn {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h2>Admin Video Control Panel</h2>
+
+  <div class="form-container">
+    <input type="text" id="videoTitle" placeholder="Video Title" />
+    <input type="text" id="videoLink" placeholder="YouTube Embed Link" />
+    <button onclick="saveVideo()">Save Video</button>
+  </div>
+
+  <table class="video-table" id="videoTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Link</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    let editingIndex = -1;
+
+    function loadVideos() {
+      const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+      const tableBody = document.querySelector("#videoTable tbody");
+      tableBody.innerHTML = "";
+
+      videos.forEach((video, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${video.title}</td>
+          <td><a href="${video.link}" target="_blank">${video.link}</a></td>
+          <td>
+            <button class="action-btn edit-btn" onclick="editVideo(${index})">Edit</button>
+            <button class="action-btn delete-btn" onclick="deleteVideo(${index})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function saveVideo() {
+      const title = document.getElementById("videoTitle").value.trim();
+      const link = document.getElementById("videoLink").value.trim();
+      if (!title || !link) return alert("Please fill in both fields");
+
+      let videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+
+      if (editingIndex >= 0) {
+        videos[editingIndex] = { title, link, added: new Date().toISOString() };
+        editingIndex = -1;
+      } else {
+        videos.push({ title, link, added: new Date().toISOString() });
+      }
+
+      localStorage.setItem("churchVideos", JSON.stringify(videos));
+      document.getElementById("videoTitle").value = "";
+      document.getElementById("videoLink").value = "";
+      loadVideos();
+    }
+
+    function editVideo(index) {
+      const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+      document.getElementById("videoTitle").value = videos[index].title;
+      document.getElementById("videoLink").value = videos[index].link;
+      editingIndex = index;
+    }
+
+    function deleteVideo(index) {
+      if (!confirm("Are you sure you want to delete this video?")) return;
+      let videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+      videos.splice(index, 1);
+      localStorage.setItem("churchVideos", JSON.stringify(videos));
+      loadVideos();
+    }
+
+    window.addEventListener("DOMContentLoaded", loadVideos);
+  </script>
+</body>
+</html>
