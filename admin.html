@@ -45,6 +45,7 @@
       padding: 10px;
       border: 1px solid #ccc;
       text-align: left;
+      word-break: break-word;
     }
 
     .video-table th {
@@ -72,15 +73,17 @@
   <h2>Admin Video Control Panel</h2>
 
   <div class="form-container">
-    <input type="text" id="videoTitle" placeholder="Video Title" />
-    <input type="text" id="videoLink" placeholder="YouTube Embed Link" />
-    <button onclick="saveVideo()">Save Video</button>
+    <input type="text" id="videoTitle" placeholder="Video or Collection Title" />
+    <input type="text" id="videoLink" placeholder="YouTube Video Link (watch?v= or embed URL)" />
+    <input type="text" id="collectionLink" placeholder="YouTube Collection/Playlist Link (optional)" />
+    <button onclick="saveVideo()">Save Video or Collection</button>
   </div>
 
   <table class="video-table" id="videoTable">
     <thead>
       <tr>
         <th>Title</th>
+        <th>Type</th>
         <th>Link</th>
         <th>Actions</th>
       </tr>
@@ -91,16 +94,61 @@
   <script>
     let editingIndex = -1;
 
+    function convertToEmbedLink(youtubeUrl) {
+      try {
+        const url = new URL(youtubeUrl.trim());
+        let videoId = null;
+
+        if (url.hostname === "youtu.be") {
+          videoId = url.pathname.slice(1);
+        } else if (url.hostname.includes("youtube.com")) {
+          if (url.searchParams.has("v")) {
+            videoId = url.searchParams.get("v");
+          } else if (url.pathname.startsWith("/embed/")) {
+            videoId = url.pathname.split("/embed/")[1];
+          }
+        }
+
+        if (!videoId) return null;
+
+        return `https://www.youtube.com/embed/${videoId}?rel=0&controls=1`;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function validateCollectionLink(url) {
+      // Simple validation to check if link is a YouTube playlist or collection link
+      try {
+        const u = new URL(url.trim());
+        if (
+          u.hostname.includes("youtube.com") &&
+          (u.searchParams.has("list") || u.pathname.includes("playlist"))
+        ) return true;
+        return false;
+      } catch {
+        return false;
+      }
+    }
+
     function loadVideos() {
       const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
       const tableBody = document.querySelector("#videoTable tbody");
       tableBody.innerHTML = "";
 
       videos.forEach((video, index) => {
+        const type = video.collectionLink ? "Collection" : "Single Video";
+        const link = video.collectionLink || video.link;
+
+        const displayLink = video.collectionLink
+          ? `<a href="${link}" target="_blank">${link}</a>`
+          : `<a href="${link}" target="_blank">${link}</a>`;
+
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${video.title}</td>
-          <td><a href="${video.link}" target="_blank">${video.link}</a></td>
+          <td>${type}</td>
+          <td>${displayLink}</td>
           <td>
             <button class="action-btn edit-btn" onclick="editVideo(${index})">Edit</button>
             <button class="action-btn delete-btn" onclick="deleteVideo(${index})">Delete</button>
@@ -112,33 +160,73 @@
 
     function saveVideo() {
       const title = document.getElementById("videoTitle").value.trim();
-      const link = document.getElementById("videoLink").value.trim();
-      if (!title || !link) return alert("Please fill in both fields");
+      const rawLink = document.getElementById("videoLink").value.trim();
+      const collectionRaw = document.getElementById("collectionLink").value.trim();
+
+      if (!title) {
+        alert("Please enter a title");
+        return;
+      }
 
       let videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
 
-      if (editingIndex >= 0) {
-        videos[editingIndex] = { title, link, added: new Date().toISOString() };
-        editingIndex = -1;
+      // If collection link provided and valid, treat as collection
+      if (collectionRaw) {
+        if (!validateCollectionLink(collectionRaw)) {
+          alert("Invalid YouTube collection/playlist link.");
+          return;
+        }
+        // Save as collection
+        if (editingIndex >= 0) {
+          videos[editingIndex] = { title, collectionLink: collectionRaw, added: new Date().toISOString() };
+          editingIndex = -1;
+        } else {
+          videos.push({ title, collectionLink: collectionRaw, added: new Date().toISOString() });
+        }
       } else {
-        videos.push({ title, link, added: new Date().toISOString() });
+        // Save as single video
+        if (!rawLink) {
+          alert("Please enter a video link or collection link");
+          return;
+        }
+
+        const embedLink = convertToEmbedLink(rawLink);
+        if (!embedLink) {
+          alert("Invalid YouTube video link. Please enter a valid YouTube video URL.");
+          return;
+        }
+
+        if (editingIndex >= 0) {
+          videos[editingIndex] = { title, link: embedLink, added: new Date().toISOString() };
+          editingIndex = -1;
+        } else {
+          videos.push({ title, link: embedLink, added: new Date().toISOString() });
+        }
       }
 
       localStorage.setItem("churchVideos", JSON.stringify(videos));
       document.getElementById("videoTitle").value = "";
       document.getElementById("videoLink").value = "";
+      document.getElementById("collectionLink").value = "";
       loadVideos();
     }
 
     function editVideo(index) {
       const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
-      document.getElementById("videoTitle").value = videos[index].title;
-      document.getElementById("videoLink").value = videos[index].link;
+      const video = videos[index];
+      document.getElementById("videoTitle").value = video.title;
+      if (video.collectionLink) {
+        document.getElementById("collectionLink").value = video.collectionLink;
+        document.getElementById("videoLink").value = "";
+      } else {
+        document.getElementById("videoLink").value = video.link;
+        document.getElementById("collectionLink").value = "";
+      }
       editingIndex = index;
     }
 
     function deleteVideo(index) {
-      if (!confirm("Are you sure you want to delete this video?")) return;
+      if (!confirm("Are you sure you want to delete this entry?")) return;
       let videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
       videos.splice(index, 1);
       localStorage.setItem("churchVideos", JSON.stringify(videos));

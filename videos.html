@@ -52,16 +52,6 @@
       font-size: 16px;
     }
 
-    .form-container {
-      text-align: center;
-      margin: 20px;
-    }
-
-    .form-container input {
-      padding: 8px;
-      margin: 5px;
-    }
-
     .section-title {
       text-align: center;
       padding: 10px;
@@ -121,13 +111,6 @@
     <input type="text" id="searchInput" placeholder="Search videos...">
   </div>
 
-  <div class="form-container">
-    <h3>Add New Video</h3>
-    <input type="text" id="videoTitle" placeholder="Video Title" required />
-    <input type="text" id="videoLink" placeholder="Paste YouTube Link (watch?v=...)" required />
-    <button onclick="addVideo()">Add Video</button>
-  </div>
-
   <h3 class="section-title">Latest Videos (added in last 24 hours)</h3>
   <section id="latestVideos" class="video-grid"></section>
 
@@ -177,31 +160,31 @@
           .forEach(v => {
             const div = document.createElement("div");
             div.className = "video-container";
-            div.innerHTML = `<iframe src="${v.link}" allowfullscreen></iframe>`;
+
+            if (v.collectionLink) {
+              let embedUrl = v.collectionLink;
+              try {
+                const url = new URL(embedUrl);
+                if (url.searchParams.has('list')) {
+                  const playlistId = url.searchParams.get('list');
+                  embedUrl = `https://www.youtube.com/embed/videoseries?list=${playlistId}`;
+                }
+              } catch {
+                // fallback - use as is
+              }
+              div.innerHTML = `<iframe src="${embedUrl}" allowfullscreen></iframe>`;
+            } else if (v.link) {
+              div.innerHTML = `<iframe src="${v.link}" allowfullscreen></iframe>`;
+            } else {
+              div.textContent = "Invalid video entry";
+            }
+
             container.appendChild(div);
           });
       };
 
       render(latest, latestContainer);
       render(old, oldContainer);
-    }
-
-    function addVideo() {
-      const title = document.getElementById("videoTitle").value.trim();
-      const rawLink = document.getElementById("videoLink").value.trim();
-
-      if (!title || !rawLink) return alert("Please fill out both fields.");
-
-      const embedLink = extractEmbedLink(rawLink);
-      if (!embedLink) return alert("Invalid YouTube link.");
-
-      const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
-      videos.push({ title, link: embedLink, added: new Date().toISOString() });
-      localStorage.setItem("churchVideos", JSON.stringify(videos));
-      
-      document.getElementById("videoTitle").value = "";
-      document.getElementById("videoLink").value = "";
-      renderVideos();
     }
 
     document.getElementById("searchInput").addEventListener("input", renderVideos);
@@ -212,7 +195,9 @@
           { title: "Latest Procession", link: "https://www.youtube.com/embed/jtbSoP2q9x4?rel=0&controls=1", added: new Date().toISOString() },
           { title: "Rosary Service", link: "https://www.youtube.com/embed/JLsyOAsxiCU?rel=0&controls=1", added: new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString() },
           { title: "Holy Mass", link: "https://www.youtube.com/embed/GKpgDhMRFbQ?rel=0&controls=1", added: new Date().toISOString() },
-          { title: "Youth Choir", link: "https://www.youtube.com/embed/UDmzt_kUwY0?rel=0&controls=1", added: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString() }
+          { title: "Youth Choir", link: "https://www.youtube.com/embed/UDmzt_kUwY0?rel=0&controls=1", added: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString() },
+          // Example playlist collection:
+          { title: "Choir Collections", collectionLink: "https://www.youtube.com/watch?v=jtbSoP2q9x4&list=PL1234567890ABCDE", added: new Date().toISOString() }
         ];
         localStorage.setItem("churchVideos", JSON.stringify(initial));
       }

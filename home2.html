@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Lady Of Sorrows Church - Ja-Ela</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+  <style>
+    .priest-section, .special-moments-section, .contact-section {
+      padding: 40px;
+    }
+
+    .priest-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .priest-content img {
+      max-width: 300px;
+      border-radius: 8px;
+    }
+
+    .special-moments-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .special-moments-gallery img {
+      width: 180px;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .contact-left {
+      background-color: #f9f9f9;
+      padding: 25px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <!-- OUR PRIEST SECTION -->
+  <section class="priest-section">
+    <h2>Our Priest</h2>
+    <div class="priest-content">
+      <img id="priestImage" src="images/default-priest.jpg" alt="Priest" />
+      <p id="priestText">Loading...</p>
+    </div>
+  </section>
+
+  <!-- SPECIAL MOMENTS SECTION -->
+  <section class="special-moments-section">
+    <h2>Special Moments</h2>
+    <div class="special-moments-gallery" id="specialMomentsGallery">
+      <!-- Images will be inserted here -->
+    </div>
+  </section>
+
+  <!-- CONTACT US SECTION -->
+  <section class="contact-section">
+    <h2>Contact Us</h2>
+    <div class="contact-left" id="contactLeft">
+      Loading contact info...
+    </div>
+  </section>
+
+  <script>
+    // Load Our Priest
+    const priestText = localStorage.getItem("priestText");
+    const priestImage = localStorage.getItem("priestImage");
+    if (priestText) document.getElementById("priestText").textContent = priestText;
+    if (priestImage) document.getElementById("priestImage").src = priestImage;
+
+    // Load Special Moments
+    const momentGallery = document.getElementById("specialMomentsGallery");
+    const moments = JSON.parse(localStorage.getItem("specialMoments") || "[]");
+    if (moments.length > 0) {
+      moments.forEach((url) => {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Moment";
+        momentGallery.appendChild(img);
+      });
+    } else {
+      momentGallery.innerHTML = "<p>No moments added yet.</p>";
+    }
+
+    // Load Contact Info
+    const contactLeft = localStorage.getItem("contactLeft");
+    if (contactLeft) {
+      document.getElementById("contactLeft").innerHTML = contactLeft;
+    }
+  </script>
+</body>
+</html>
