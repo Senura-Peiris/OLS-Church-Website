@@ -72,6 +72,23 @@ if (musicToggle) {
     }
   });
 }
+// ===========================
+// Mobile Navigation bar 
+// ===========================
+
+document.addEventListener("DOMContentLoaded", () => {
+  const hamburger = document.getElementById("hamburger");
+  const mobileNav = document.getElementById("mobileNav");
+  const closeNav = document.getElementById("closeNav");
+
+  hamburger.addEventListener("click", () => {
+    mobileNav.style.top = "0"; // Slide down
+  });
+
+  closeNav.addEventListener("click", () => {
+    mobileNav.style.top = "-100%"; // Slide up
+  });
+});
 
 // ===========================
 // Image Slider (Hero)
