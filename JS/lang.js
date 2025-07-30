@@ -1,6 +1,6 @@
 const translations = {
     en: {
-      nav: ["Home", "Videos", "Notices", "About", "Contact"],
+      nav: ["Home", "About Us", "Notices", "Gallery"],
       title: "Our Lady Of Sorrows<br/>Church Ja-Ela",
       aboutTitle: "About Our Church",
       aboutText:
@@ -17,8 +17,8 @@ const translations = {
       footer: "© 2025 Our Lady Of Sorrows Church - Ja-Ela. All rights reserved.",
     },
     si: {
-      nav: ["මුල් පිටුව", "වීඩියෝ", "නිවේදන", "අපි ගැන", "සම්බන්ධවන්න"],
-      title: "වික්ෂෝප දේවමාතා දෙව්මැදුර <br/>ජාඇල",
+      nav: ["මුල් පිටුව", "අපි ගැන", "නිවේදන", "ගැලරිය"],
+      title: "වික්ෂෝප දේවමාතා දෙව්මැදුර <br/>ජා-ඇල",
       aboutTitle: "අපගේ දෙව්මැදුර පිළිබඳව",
       aboutText:
         "ජාඇල වික්ෂෝප දේවමාතා දෙව්මැදුර ආගමික වඳුන් සහ සමාජ එකමුතුව සඳහා වූ ස්ථානයකි. සාමය, ආශිර්වාදය සහ සබඳතා බලාපොරොත්තු වන සැමට අපි ආරාධනා කරමු.",
