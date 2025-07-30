@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<body>
+    <h2>Admin Video Control Panel</h2>
+    <div class="form-container">
+      <input type="text" id="videoTitle" placeholder="Video or Collection Title" />
+      <input type="text" id="videoLink" placeholder="YouTube Video Link (watch?v= or embed URL)" />
+      <input type="text" id="collectionLink" placeholder="YouTube Collection/Playlist Link (optional)" />
+      <button onclick="saveVideo()">Save Video or Collection</button>
+    </div>
+  
+    <table class="video-table" id="videoTable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Link</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  
+    <h2>Update Our Priest Section</h2>
+    <div class="section">
+      <div>
+        <input type="text" id="priestImage1" placeholder="Image URL 1" /><br>
+        <input type="text" id="priestImage2" placeholder="Image URL 2" /><br>
+        <input type="text" id="priestImage3" placeholder="Image URL 3" /><br>
+        <input type="text" id="priestImage4" placeholder="Image URL 4" /><br>
+      </div>
+      <br>
+      <textarea id="priestText" rows="4" cols="50" placeholder="Priest description"></textarea>
+      <br>
+      <button onclick="savePriest()">Save Priest Section</button>
+    </div>
+  
+    <h2>Update Special Moments Section</h2>
+    <div class="section">
+      <input type="text" id="momentImage1" placeholder="Image URL 1" /><br>
+      <input type="text" id="momentImage2" placeholder="Image URL 2" /><br>
+      <input type="text" id="momentImage3" placeholder="Image URL 3" /><br>
+      <input type="text" id="momentImage4" placeholder="Image URL 4" /><br><br>
+      <button onclick="saveMoments()">Save Special Moments</button>
+    </div>
+  
+    <h2>Update Contact Information</h2>
+    <div class="section">
+      <textarea id="contactInfo" rows="4" cols="60" placeholder="Enter contact info text"></textarea>
+      <br>
+      <button onclick="saveContact()">Save Contact Info</button>
+    </div>
+  
+    <script>
+      // unchanged functions above...
+  
+      function savePriest() {
+        const text = document.getElementById("priestText").value.trim();
+        const images = [
+          document.getElementById("priestImage1").value.trim(),
+          document.getElementById("priestImage2").value.trim(),
+          document.getElementById("priestImage3").value.trim(),
+          document.getElementById("priestImage4").value.trim()
+        ];
+        localStorage.setItem("priestSection", JSON.stringify({ text, images }));
+        alert("Priest section saved!");
+      }
+  
+      function saveMoments() {
+        const images = [
+          document.getElementById("momentImage1").value.trim(),
+          document.getElementById("momentImage2").value.trim(),
+          document.getElementById("momentImage3").value.trim(),
+          document.getElementById("momentImage4").value.trim()
+        ];
+        localStorage.setItem("specialMoments", JSON.stringify(images));
+        alert("Special moments updated!");
+      }
+  
+      function saveContact() {
+        const contact = document.getElementById("contactInfo").value.trim();
+        localStorage.setItem("contactInfo", contact);
+        alert("Contact info saved!");
+      }
+  
+      window.addEventListener("DOMContentLoaded", loadVideos);
+    </script>
+  </body>
+  </html>
+  
