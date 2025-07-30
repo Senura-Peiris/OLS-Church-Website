@@ -433,7 +433,7 @@ input:checked + .slider:before {
   text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
 }
 
-.see-more-btn {
+.see-more-btn a {
   background: linear-gradient(to right, #289af8, #003366, #289af8);
   border: none;
   padding: 12px 28px;
@@ -446,7 +446,8 @@ input:checked + .slider:before {
   transition: background 0.3s ease;
 }
 
-.see-more-btn:hover {
+
+.see-more-btn a:hover {
   background: linear-gradient(to right, #003366, #289af8, #003366);
 }
 

@@ -3,74 +3,221 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Page</title>
+  <title>Videos - Our Lady Of Sorrows Church Ja-Ela</title>
   <link rel="stylesheet" href="CSS/style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 20px;
+      padding: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .video-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .search-bar {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 60%;
+      max-width: 400px;
+      font-size: 16px;
+    }
+
+    .form-container {
+      text-align: center;
+      margin: 20px;
+    }
+
+    .form-container input {
+      padding: 8px;
+      margin: 5px;
+    }
+
+    .section-title {
+      text-align: center;
+      padding: 10px;
+      font-size: 22px;
+      background: #eee;
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Header Section -->
   <header class="header">
     <div class="header-container">
-      <!-- Left: Logo -->
       <div class="logo">
         <img src="images/logo1.jpg" alt="Church Logo" />
       </div>
-
-      <!-- Center: Navigation -->
       <nav class="nav-menu">
         <ul>
           <li><a href="home.html">Home</a></li>
           <li><a href="#" class="active">Videos</a></li>
           <li><a href="notices.html">Notices</a></li>
-          <li><a href="about.html" >About</a></li>
+          <li><a href="about.html">About</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
-
-      <!-- Right: User + Music Switch -->
       <div class="header-right">
-        <!-- User Icon -->
         <div class="user-icon" id="userIcon">
-          <i class="fa fa-user-circle-o" aria-hidden="true" style="font-size: 35px; color: white;" title="User"></i>
+          <i class="fa fa-user-circle-o" style="font-size: 35px; color: white;"></i>
           <div class="user-details" id="userDetails">
             <p><strong>John Doe</strong></p>
             <p>johndoe@example.com</p>
           </div>
         </div>
-        
-        <!-- Music Toggle -->
-       <!-- Music Toggle -->
-<div class="header-right music-toggle-wrapper">
-  <i class="fa fa-volume-off" aria-hidden="true" style="color: white; font-size: 18px;" title="off"></i>
-
-  <label class="switch">
-    <input type="checkbox" id="musicToggle" checked />
-    <span class="slider round"></span>
-  </label>
-  <i class="fa fa-volume-up" aria-hidden="true" style="color: white; font-size: 18px;" title="on"></i>
-</div>
-
-<!-- Add inside header-right div, right after music-toggle-wrapper -->
-<div class="language-switch">
-  <select id="languageSelect" title="Language Switch">
-    <option value="en">English</option>
-    <option value="si">සිංහල</option>
-  </select>
-</div>
-
-
-
-<!-- Audio -->
-<audio id="backgroundMusic" src="audio/කුරුසිය ළඟ වැළපුන මවෙනී _ Kurusiya Langa Walapuna Maweni By St. Cecilia_s Choir, Ja-Ela.m4a" loop autoplay></audio>
+        <div class="header-right music-toggle-wrapper">
+          <i class="fa fa-volume-off" style="color: white; font-size: 18px;"></i>
+          <label class="switch">
+            <input type="checkbox" id="musicToggle" checked />
+            <span class="slider round"></span>
+          </label>
+          <i class="fa fa-volume-up" style="color: white; font-size: 18px;"></i>
+        </div>
+        <div class="language-switch">
+          <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="si">සිංහල</option>
+          </select>
+        </div>
+        <audio id="backgroundMusic" src="audio/කුරුසිය ළඟ වැළපුන මවෙනී _ Kurusiya Langa Walapuna Maweni By St. Cecilia_s Choir, Ja-Ela.m4a" loop autoplay></audio>
       </div>
     </div>
   </header>
 
   <section class="page-header">
-    <h2 class="page-title">Videos Of the Events</h2>
+    <h2 class="page-title">Church Videos</h2>
   </section>
 
-  <script src="JS/script.js"></script>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search videos...">
+  </div>
 
-  </body>
-  </html>
+  <div class="form-container">
+    <h3>Add New Video</h3>
+    <input type="text" id="videoTitle" placeholder="Video Title" required />
+    <input type="text" id="videoLink" placeholder="Paste YouTube Link (watch?v=...)" required />
+    <button onclick="addVideo()">Add Video</button>
+  </div>
+
+  <h3 class="section-title">Latest Videos (added in last 24 hours)</h3>
+  <section id="latestVideos" class="video-grid"></section>
+
+  <h3 class="section-title">Videos Of Our Church</h3>
+  <section id="oldVideos" class="video-grid"></section>
+
+  <script>
+    function extractEmbedLink(youtubeUrl) {
+      try {
+        const url = new URL(youtubeUrl);
+        const videoId = url.searchParams.get("v") || url.pathname.split("/").pop();
+        if (!videoId) return null;
+        return `https://www.youtube.com/embed/${videoId}?rel=0&controls=1`;
+      } catch {
+        return null;
+      }
+    }
+
+    function getVideos() {
+      let videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+      const now = new Date();
+      const latest = [];
+      const old = [];
+
+      videos.forEach(v => {
+        const added = new Date(v.added);
+        const hoursAgo = (now - added) / (1000 * 60 * 60);
+        if (hoursAgo <= 24) latest.push(v);
+        else old.push(v);
+      });
+
+      return { latest, old };
+    }
+
+    function renderVideos() {
+      const { latest, old } = getVideos();
+      const latestContainer = document.getElementById("latestVideos");
+      const oldContainer = document.getElementById("oldVideos");
+      const searchValue = document.getElementById("searchInput").value.toLowerCase();
+
+      latestContainer.innerHTML = "";
+      oldContainer.innerHTML = "";
+
+      const render = (list, container) => {
+        list
+          .filter(v => v.title.toLowerCase().includes(searchValue))
+          .forEach(v => {
+            const div = document.createElement("div");
+            div.className = "video-container";
+            div.innerHTML = `<iframe src="${v.link}" allowfullscreen></iframe>`;
+            container.appendChild(div);
+          });
+      };
+
+      render(latest, latestContainer);
+      render(old, oldContainer);
+    }
+
+    function addVideo() {
+      const title = document.getElementById("videoTitle").value.trim();
+      const rawLink = document.getElementById("videoLink").value.trim();
+
+      if (!title || !rawLink) return alert("Please fill out both fields.");
+
+      const embedLink = extractEmbedLink(rawLink);
+      if (!embedLink) return alert("Invalid YouTube link.");
+
+      const videos = JSON.parse(localStorage.getItem("churchVideos") || "[]");
+      videos.push({ title, link: embedLink, added: new Date().toISOString() });
+      localStorage.setItem("churchVideos", JSON.stringify(videos));
+      
+      document.getElementById("videoTitle").value = "";
+      document.getElementById("videoLink").value = "";
+      renderVideos();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", renderVideos);
+
+    window.addEventListener("DOMContentLoaded", () => {
+      if (!localStorage.getItem("churchVideos")) {
+        const initial = [
+          { title: "Latest Procession", link: "https://www.youtube.com/embed/jtbSoP2q9x4?rel=0&controls=1", added: new Date().toISOString() },
+          { title: "Rosary Service", link: "https://www.youtube.com/embed/JLsyOAsxiCU?rel=0&controls=1", added: new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString() },
+          { title: "Holy Mass", link: "https://www.youtube.com/embed/GKpgDhMRFbQ?rel=0&controls=1", added: new Date().toISOString() },
+          { title: "Youth Choir", link: "https://www.youtube.com/embed/UDmzt_kUwY0?rel=0&controls=1", added: new Date(Date.now() - 30 * 60 * 60 * 1000).toISOString() }
+        ];
+        localStorage.setItem("churchVideos", JSON.stringify(initial));
+      }
+      renderVideos();
+    });
+  </script>
+</body>
+</html>
