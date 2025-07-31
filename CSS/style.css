@@ -161,6 +161,7 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
 /*----Mobile navigation bar styles---*/
 /* Default state for mobile nav */
 .mobile-nav {

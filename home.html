@@ -8,82 +8,93 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-  <!-- Header Section -->
-  <header class="header">
-    <div class="header-container">
-      <!-- Left: Logo -->
-      <div class="logo">
-        <img src="images/logo1.jpg" alt="Church Logo" />
-      </div>
-
-      <!-- Center: Navigation -->
-      <nav class="nav-menu">
-        <ul>
-          <li><a href="#" class="active">Home</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="notices.html">Notices</a></li>
-          <li><a href="Societiescomm.html">Societies & Communities</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-
-      <!-- Right: User + Music Switch -->
-<div class="header-right">
-       <!-- Music Toggle -->
-<div class="header-right music-toggle-wrapper">
-  <i class="fa fa-volume-off" aria-hidden="true" style="color: white; font-size: 18px;" title="off"></i>
-
-  <label class="switch" >
-    <input type="checkbox" id="musicToggle" style="cursor: pointer;"/>
-    <span class="slider round"></span>
-  </label>
-  <i class="fa fa-volume-up" aria-hidden="true" style="color: white; font-size: 18px;" title="on"></i>
-</div>
-
-<!-- Add inside header-right div, right after music-toggle-wrapper -->
-<div class="language-switch">
-  <select id="languageSelect" title="Language Switch">
-    <option value="en">English</option>
-    <option value="si">සිංහල</option>
-  </select>
-</div>
-
-
-<!-- Audio -->
-<audio id="backgroundMusic" src="audio/කුරුසිය ළඟ වැළපුන මවෙනී _ Kurusiya Langa Walapuna Maweni By St. Cecilia_s Choir, Ja-Ela.m4a" loop autoplay></audio>
-      </div>
+<!-- Header Section -->
+<header class="header">
+  <div class="header-container">
+    <!-- Left: Logo -->
+    <div class="logo">
+      <img src="images/logo1.jpg" alt="Church Logo" />
     </div>
 
-    <!--Mobile navigation bar-->
-    <div class="hamburger" id="hamburger">
-      <i class="fa fa-bars" aria-hidden="true"></i>
-    </div>
-    
+    <!-- Center: Navigation -->
     <nav class="nav-menu">
       <ul>
         <li><a href="#" class="active">Home</a></li>
         <li><a href="about.html">About Us</a></li>
         <li><a href="notices.html">Notices</a></li>
-        <li><a href="Societiescomm.html">Societies & Communities</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+
+        <!-- Dropdown Item -->
+        <li class="dropdown">
+          <a href="Societiescomm.html">Societies & Communities <i class="fa fa-arrow-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Legion of Mary</a></li>
+            <li><a href="#">St. Vincent De Paul Society</a></li>
+            <li><a href="#">Sunday School</a></li>
+            <li><a href="#">Youth Society</a></li>
+            <li><a href="#">Choir</a></li>
+          </ul>
+        </li>
+
+        
       </ul>
     </nav>
-    
-    <!-- Mobile nav (for small screens) -->
-    <div class="mobile-nav" id="mobileNav">
-      <div class="close-icon" id="closeNav">
-        <i class="fa fa-times" aria-hidden="true"></i>
+
+    <!-- Right: User + Music Switch -->
+    <div class="header-right">
+      <div class="header-right music-toggle-wrapper">
+        <i class="fa fa-volume-off" aria-hidden="true" style="color: white; font-size: 18px;" title="off"></i>
+        <label class="switch">
+          <input type="checkbox" id="musicToggle" style="cursor: pointer;" />
+          <span class="slider round"></span>
+        </label>
+        <i class="fa fa-volume-up" aria-hidden="true" style="color: white; font-size: 18px;" title="on"></i>
       </div>
-      <ul>
-        <li><a href="#" class="active">Home</a></li>
-        <li><a href="about.html">About Us</a></li>
-        <li><a href="notices.html">Notices</a></li>
-        <li><a href="Societiescomm.html">Societies & Communities</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+
+      <!-- Language Switch -->
+      <div class="language-switch">
+        <select id="languageSelect" title="Language Switch">
+          <option value="en">English</option>
+          <option value="si">සිංහල</option>
+        </select>
+      </div>
+
+      <!-- Audio -->
+      <audio id="backgroundMusic" src="audio/කුරුසිය ළඟ වැළපුන මවෙනී _ Kurusiya Langa Walapuna Maweni By St. Cecilia_s Choir, Ja-Ela.m4a" loop autoplay></audio>
     </div>
-    
-  </header>
+  </div>
+
+  <!-- Hamburger for Mobile -->
+  <div class="hamburger" id="hamburger">
+    <i class="fa fa-bars" aria-hidden="true"></i>
+  </div>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <div class="close-icon" id="closeNav">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </div>
+    <ul>
+      <li><a href="#" class="active">Home</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="notices.html">Notices</a></li>
+      <li><a href="#contact">Contact Us</a></li> 
+      <!-- Dropdown replicated for mobile -->
+      <li class="dropdown">
+        <a href="#">Societies & Communities <i class="fa fa-arrow-down"></i></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Legion of Mary</a></li>
+          <li><a href="#">St. Vincent De Paul Society</a></li>
+          <li><a href="#">Sunday School</a></li>
+          <li><a href="#">Youth Society</a></li>
+          <li><a href="#">Choir</a></li>
+        </ul>
+      </li>
+      
+    </ul>
+  </div>
+</header>
+
   <!-- Hero Section -->
 <section class="hero">
   <div class="slider-container" id="imageSlider">
