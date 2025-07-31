@@ -1,6 +1,6 @@
 const translations = {
     en: {
-      nav: ["Home", "About Us", "Notices", "Gallery"],
+      nav: ["Home", "About Us", "Notices", "Societies & Communities", "Contact"],
       title: "Our Lady Of Sorrows<br/>Church Ja-Ela",
       aboutTitle: "About Our Church",
       aboutText:
@@ -17,7 +17,7 @@ const translations = {
       footer: "© 2025 Our Lady Of Sorrows Church - Ja-Ela. All rights reserved.",
     },
     si: {
-      nav: ["මුල් පිටුව", "අපි ගැන", "නිවේදන", "ගැලරිය"],
+      nav: ["ප්‍රධාන පිටුව", "අපි ගැන", "නිවේදන", "සමිති සමාගම්", "අපව අමතන්න"],
       title: "වික්ෂෝප දේවමාතා දෙව්මැදුර <br/>ජා-ඇල",
       aboutTitle: "අපගේ දෙව්මැදුර පිළිබඳව",
       aboutText:

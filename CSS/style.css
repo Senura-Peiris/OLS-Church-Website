@@ -442,14 +442,15 @@ input:checked + .slider:before {
   font-size: 1rem;
   border-radius: 30px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(40,154,248,0.7);
-  transition: background 0.3s ease;
+  text-decoration: none;
 }
 
 
 .see-more-btn a:hover {
-  background: linear-gradient(to right, #003366, #289af8, #003366);
+  transform: scale(1.5);
+  transition: transform 0.5s ease;
 }
+
 
 /* Responsive */
 @media (max-width: 768px) {
